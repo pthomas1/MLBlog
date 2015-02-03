@@ -1,2 +1,2 @@
 # MLBlog
-Thoughtly wizardy
+Thoughtly wizardry
