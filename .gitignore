@@ -1,0 +1,11 @@
+corpus/
+.DS_Store
+.idea/modules.xml
+.idea/workspace.xml
+.idea/misc.xml
+.idea/thoughtly_blogs.iml
+.~lock*
+*.csv
+*.png
+posts
+.idea
