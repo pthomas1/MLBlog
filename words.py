@@ -499,7 +499,7 @@ def compare_stemming_to_lemmatization():
                         "Token Counts for Words, Stems and Lemmas",
                         corpora_names,
                         "Token Counts",
-                        ["Words", "Stems", "Lemmas"],
+                        ["Words", "Lemmas", "Stems"],
                         ['#59799e', '#810CE8', '#FF0000'],
                         .5)
 
