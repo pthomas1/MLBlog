@@ -4,5 +4,5 @@ This repo contains the source code for the tutorial series at http://www.thought
 
 The first post focuses on text handling with an emphasis on tokenization and term frequency.  This post covers the general use of the code found in words.py: http://www.thoughtly.co/blog/working-with-text/.
 
-The second post is an introduction to probability.  It's part 1 of 2 on this topic: http://www.thoughtly.co/blog/probability-part-1/.
+The second post is an introduction to probability.  It's the first of two tutorials on the subject: http://www.thoughtly.co/blog/probability/.
 
