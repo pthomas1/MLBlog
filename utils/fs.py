@@ -25,6 +25,10 @@ import os
 from os import listdir
 from os.path import isfile, join, split
 
+# We output files as CSVs where appropriate
+import unicodecsv as csv
+
+
 def add_filesystem_path_args(parser, short_name, long_name, help, required, group=None):
     if group != None:
         parser = group
@@ -139,3 +143,33 @@ def file_names_at_path(path, recursive, exceptions=None):
     
 def input_file_names(args):
     return file_names_at_path(args["input"], args["recursive"] == True)
+
+
+###############################################################################
+#
+# Simple method to open a unicode CSV file.  If column names are provided the
+# method also writes them out as the first line of the CSV
+#
+###############################################################################
+
+def open_csv_file(name, column_names=None):
+    output_file = open(name, "wb")
+    output_csv_file = csv.writer(output_file,
+                                 quoting=csv.QUOTE_MINIMAL)
+
+    if column_names is not None:
+        output_csv_file.writerow(column_names)
+
+    return output_csv_file
+
+
+def read_csv(name):
+    rows = []
+    with open(name, 'rb') as csvfile:
+        reader = csv.reader(csvfile, delimiter=',', quotechar='"')
+        for row in reader:
+            #remove the Latin spaces
+            row[1] = row[1].replace(u'\xa0', u' ')
+            rows.extend([row])
+
+    return rows

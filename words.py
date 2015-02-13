@@ -44,13 +44,8 @@ import logging
 # A simple helper for setting up log files based on commandline args
 from utils import log
 
-# We output files as CSVs where appropriate
-import unicodecsv as csv
-
 # Used for log method
 import math
-
-# Generates charts
 
 # numpy is just used for some simple array helpers
 import numpy
@@ -170,7 +165,7 @@ def output_corpus_terms(corpus, unique_vocabulary=None):
     if unique_vocabulary is None:
         unique_vocabulary = collect_unique_terms(corpus)
 
-    output_csv_file = open_csv_file("corpus_terms.csv", ["Term"])
+    output_csv_file = fs.open_csv_file("corpus_terms.csv", ["Term"])
 
     for term in unique_vocabulary:
         logging.debug(term)
@@ -188,7 +183,7 @@ def output_corpus_terms(corpus, unique_vocabulary=None):
 def collect_and_output_corpus_term_frequencies(corpus, corpus_name):
     term_frequencies = collect_term_counts(corpus)
 
-    output_csv_file = open_csv_file("term_frequencies.csv", ["Term", "Frequency"])
+    output_csv_file = fs.open_csv_file("term_frequencies.csv", ["Term", "Frequency"])
 
     unsorted_array = [[key,value] for key, value in term_frequencies.iteritems()]
     sorted_array = sorted(unsorted_array, key=lambda term_frequency: term_frequency[1], reverse=True)
@@ -222,7 +217,7 @@ def collect_and_output_normalized_corpus_term_frequencies(corpus, corpus_name, t
     if term_frequencies is None:
         term_frequencies = collect_term_counts(corpus)
 
-    output_csv_file = open_csv_file("normalized_term_frequencies.csv", ["Term", "Log Normalized TF"])
+    output_csv_file = fs.open_csv_file("normalized_term_frequencies.csv", ["Term", "Log Normalized TF"])
 
     unsorted_array = []
 
@@ -271,7 +266,7 @@ def collect_and_output_frequency_frequencies(corpus, corpus_name, term_frequenci
 
     frequency_frequencies_to_chart = []
     frequencies_to_chart = []
-    output_csv_file = open_csv_file("frequency_frequencies.csv", ["Frequency Frequency", "Term Frequency"])
+    output_csv_file = fs.open_csv_file("frequency_frequencies.csv", ["Frequency Frequency", "Term Frequency"])
 
     # we collect frequencies_to_chart and frequency_frequencies_to_chart each into their own single dimensional
     # array.  Then we pass frequency_frequencies_to_chart in an array so that it is 2D as needed by the chart.
@@ -655,23 +650,6 @@ def configure_command_line_arguments():
 
     return args
 
-###############################################################################
-#
-# Simple method to open a unicode CSV file.  If column names are provided the
-# method also writes them out as the first line of the CSV
-#
-###############################################################################
-
-def open_csv_file(name, column_names=None):
-    output_file = open(name, "wb")
-    output_csv_file = csv.writer(output_file,
-                                 quoting=csv.QUOTE_MINIMAL)
-
-    if column_names is not None:
-        output_csv_file.writerow(column_names)
-
-    return output_csv_file
-
 
 
 ###############################################################################
@@ -700,6 +678,9 @@ def chart_term_frequencies(file_name, title, y_axis, term_frequencies, indexes=n
                         chart_terms,
                         ['#59799e', '#810CE8', '#FF0000', '#12995D', '#FD53FF', '#AA55CC'],
                         1, 0.2)
+
+
+
 ###############################################################################    
 #
 # This is a pythonism.  Rather than putting code directly at the "root"
