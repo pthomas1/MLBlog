@@ -128,7 +128,7 @@ def plot_distribution(file_name, title, y_label, data, num_buckets=None, bucket_
             if (i%step_size) != 0:
                 bucket_ranges[i] = ""
             else:
-                bucket_ranges[i] = "{:.1f}".format(bucket_ranges[i])
+                bucket_ranges[i] = "{0:.1f}".format(bucket_ranges[i])
     else:
         bucket_ranges = None
 
