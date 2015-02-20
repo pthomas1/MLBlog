@@ -259,6 +259,11 @@ def flip_a_coin(number_of_flips):
 
 ###############################################################################
 #
+# This function is responsible for running a simulation of draws from a number
+# of jars filled with colored marbles.  The user can configure the simulation
+# in marbles.csv.  Each row is a jar.  Columns represent the marbles in each
+# of the jars.  Two are provided to match the tutorial text, but an arbitrary
+# number can be simulated.
 #
 ###############################################################################
 
