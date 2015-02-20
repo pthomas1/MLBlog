@@ -4,8 +4,9 @@ corpus/
 .idea/workspace.xml
 .idea/misc.xml
 .idea/thoughtly_blogs.iml
-.idea
 .~lock*
 *.csv
 *.pyc
 *.png
+.idea
+!marbles.csv

@@ -69,7 +69,8 @@ def main():
     if args["poissonDistribution"]:
         generate_poisson_distributed_pdf(num_trials, int(args["lambda"]))
 
-
+    if args["jars"]:
+        marbles_and_jars(num_trials);
 
 ###############################################################################
 #
@@ -258,6 +259,85 @@ def flip_a_coin(number_of_flips):
 
 ###############################################################################
 #
+#
+###############################################################################
+
+def marbles_and_jars(num_trials):
+
+    # read in the csv file of jars
+    rows = fs.read_csv("marbles.csv")
+    logging.debug("Read rows: " + str(rows))
+
+    jars = {}
+    headers = []
+    marble_picks = {}
+
+    # go through the rows and build a dictionary of jar_name => array of marble colors
+    for index, row in enumerate(rows):
+        # first row is just header data
+        if index == 0:
+            headers = row
+        else:
+            # go through each of the headers (these are columns)
+            for column_index, header in enumerate(headers):
+                # if the first column than it's the name of the jar - initialize the array to empty (no marbles)
+                if column_index == 0:
+                    jars[row[0]] = []
+                else:
+                    # each other column represents a number of marbles, the name of the marble is in the header
+                    marble_color = header
+
+                    # initialize the counters for picking marbles for the given color
+                    marble_picks[marble_color] = 0
+
+                    # set blank cells to 0, otherwise add the value in the cell
+                    if len(row[column_index]) == 0:
+                        num_marbles = 0
+                    else:
+                        num_marbles = int(row[column_index])
+
+                    # expand an array of colors, 1 element for each num_marbles
+                    jars[row[0]] += [marble_color] * num_marbles
+
+    logging.info("Jars: " + str(jars))
+
+    for i in range(0, num_trials):
+        # pick a random jar from all of the jars w/out taking the marbles into consideration
+        jar_names = jars.keys()
+        jar_name = jar_names[random.randint(0, len(jar_names) - 1)]
+
+        # now draw a single marble from all the marbles given that we selected a jar
+        marbles = jars[jar_name];
+        marble = marbles[random.randint(0, len(marbles) - 1)]
+        marble_picks[marble] += 1
+
+    logging.info("Marble picks : " + str(marble_picks))
+
+    # prepare the data for plotting
+    keys = []
+    data = []
+    for key, value in marble_picks.iteritems():
+        column_name = key + " (" + str(value) + ")"
+        keys.extend([column_name])
+        data.extend([value/float(num_trials)])
+
+    description_list = []
+    for jar_name, jar_marbles in jars.iteritems():
+        description_list.append(jar_name + "(" + str(len(jar_marbles)) + ")")
+    description = ", ".join(description_list)
+
+    # plot the data
+    charting.bar_chart("marbles.png",
+                       [data],
+                       "Marbles in Jars (" + str(num_trials) + ") - " + description,
+                       keys,
+                       "Probabilities",
+                       None,
+                       ['#59799e'])
+
+
+###############################################################################
+#
 # Build the commandline parser for the script and return a map of the entered
 # options.  In addition, setup logging based on the user's entered log level.
 # Specific options are documented inline.
@@ -360,6 +440,13 @@ def configure_command_line_arguments():
                         required=False,
                         default=3)
 
+    # run marble/jar simulation
+    parser.add_argument('-j',
+                        '--jars',
+                        help="Calculate probability distribution of marble choices.",
+                        required=False,
+                        action='store_true')
+
     # Parse the passed commandline args and turn them into a dictionary.
     args = vars(parser.parse_args())
 
@@ -367,7 +454,6 @@ def configure_command_line_arguments():
     log.set_log_level_from_args(args)
 
     return args
-
 
 
 ###############################################################################
