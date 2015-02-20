@@ -6,3 +6,4 @@ The first post focuses on text handling with an emphasis on tokenization and ter
 
 The second post is an introduction to probability.  It's the first of two tutorials on the subject: http://www.thoughtly.co/blog/probability/.
 
+Post three discusses more advanced probability topics, primarily Bayes Theorem.  it is availabe here: http://www.thoughtly.co/blog/bayes-theorem/
