@@ -39,7 +39,7 @@ def set_log_level_from_args(args):
         raise ValueError('Invalid log level: %s' % log_level)
 
     if args["verbose"] or args["veryVerbose"]:
-        logging.basicConfig(format='%(asctime)s (%(levelname)s): %(message)s', level=numeric_level)
+        logging.basicConfig(format='%(asctime)s: %(message)s', level=numeric_level)
     else:
         logging.basicConfig(format='%(message)s')        
             

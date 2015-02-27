@@ -346,37 +346,37 @@ def collect_term_counts(corpus):
 
 def load_text_corpus(args):
 
-    if args["abc"]:
+    if args.has_key("abc") and args["abc"]:
         logging.debug("Loading the ABC corpus.")
         name = "ABC"
         words = nltk.corpus.abc.words()
 
-    elif args["genesis"]:
-        logging.debug("Loading the ABC corpus.")
+    elif args.has_key("genesis") and args["genesis"]:
+        logging.debug("Loading the Genesis corpus.")
         name = "Genesis"
         words = nltk.corpus.genesis.words()
 
-    elif args["gutenberg"]:
+    elif args.has_key("gutenberg") and args["gutenberg"]:
         logging.debug("Loading the Gutenberg corpus.")
         name = "Gutenberg"
         words = nltk.corpus.gutenberg.words()
 
-    elif args["inaugural"]:
+    elif args.has_key("inaugural") and args["inaugural"]:
         logging.debug("Loading the Inaugural Address corpus.")
         name = "Inaugural"
         words = nltk.corpus.inaugural.words()
 
-    elif args["stateUnion"]:
+    elif args.has_key("stateUnion") and args["stateUnion"]:
         logging.debug("Loading the State of the Union corpus.")
         name = "Union"
         words = nltk.corpus.state_union.words()
 
-    elif args["webtext"]:
+    elif args.has_key("webtext") and args["webtext"]:
         logging.debug("Loading the webtext corpus.")
         name = "Web"
         words = nltk.corpus.webtext.words()
 
-    elif args["custom"] != None:
+    elif args.has_key("custom") and args["custom"] != None:
         logging.debug("Loading a custom corpus from " + args["custom"])
         name = "Custom"
         words = load_custom_corpus(args["custom"])
@@ -384,7 +384,8 @@ def load_text_corpus(args):
         words = ""
         name = "None"
 
-    logging.debug("Read " + str(len(words)) + " words: " + str(words[0:20]))
+    if len(words) > 0:
+        logging.debug("Read " + str(len(words)) + " words: " + str(words[0:20]))
 
     return words, name
 
@@ -420,8 +421,11 @@ def stem_words_array(words_array):
     stemmer = nltk.PorterStemmer();
     stemmed_words_array = [];
     for word in words_array:
-        stem = stemmer.stem(word);
-        stemmed_words_array.append(stem);
+        try:
+            stem = stemmer.stem(word);
+            stemmed_words_array.append(stem);
+        except Exception:
+            pass
 
     return stemmed_words_array;
 
