@@ -8,4 +8,4 @@ The second post is an introduction to probability.  It's the first of two tutori
 
 Post three discusses more advanced probability topics, primarily Bayes Theorem.  It is availabe here: http://www.thoughtly.co/blog/bayes-theorem/
 
-Post four combines topics from the previous posts to introduce our first machine learning algorith, the Naive Bayes Classifer : http://www.thoughtly.co/blog/naive-bayes-classifier
+Post four combines topics from the previous posts to introduce our first machine learning algorithm, the Naive Bayes Classifer : http://www.thoughtly.co/blog/naive-bayes-classifier
